@@ -25,6 +25,10 @@ public class BeerPageList extends PageImpl<BeerDto> {
         super(content, PageRequest.of(number, size), totalElements);
     }
 
+    public BeerPageList(List<BeerDto> content, Pageable pageable, long total) {
+        super(content, pageable, total);
+    }
+
     public BeerPageList(List<BeerDto> content) {
         super(content);
     }

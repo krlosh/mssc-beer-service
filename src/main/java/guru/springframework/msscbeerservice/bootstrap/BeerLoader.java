@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 
-@Component
+//@Component
 public class BeerLoader implements CommandLineRunner {
 
     public static String BEER_1_UPC = "0631234200036";
@@ -22,7 +22,8 @@ public class BeerLoader implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        loadBeerObjects();
+        //using data.sql
+        //loadBeerObjects();
     }
 
     private void loadBeerObjects() {

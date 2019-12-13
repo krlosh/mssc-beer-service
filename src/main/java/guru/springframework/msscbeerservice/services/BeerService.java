@@ -1,4 +1,4 @@
-package guru.springframework.msscbeerservice.web.service;
+package guru.springframework.msscbeerservice.services;
 
 import guru.springframework.msscbeerservice.web.model.BeerDto;
 import guru.springframework.msscbeerservice.web.model.BeerPageList;

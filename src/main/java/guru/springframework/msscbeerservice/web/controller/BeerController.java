@@ -3,7 +3,7 @@ package guru.springframework.msscbeerservice.web.controller;
 import guru.springframework.msscbeerservice.web.model.BeerDto;
 import guru.springframework.msscbeerservice.web.model.BeerPageList;
 import guru.springframework.msscbeerservice.web.model.BeerStyleEnum;
-import guru.springframework.msscbeerservice.web.service.BeerService;
+import guru.springframework.msscbeerservice.services.BeerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;

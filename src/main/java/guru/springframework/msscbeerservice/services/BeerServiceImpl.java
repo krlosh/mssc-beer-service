@@ -8,6 +8,7 @@ import guru.springframework.msscbeerservice.web.model.BeerDto;
 import guru.springframework.msscbeerservice.web.model.BeerPageList;
 import guru.springframework.msscbeerservice.web.model.BeerStyleEnum;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -23,8 +24,10 @@ public class BeerServiceImpl implements BeerService {
     private final BeerRepository repository;
     private final BeerMapper mapper;
 
+    @Cacheable(cacheNames = "beerCache", key = "#beerId", condition = "#showInventoryOnHand==false")
     @Override
     public BeerDto getById(UUID beerId, Boolean showInventoryOnHand) {
+        System.out.println("I was called");
         if(showInventoryOnHand){
             return this.mapper.beerToBeerDtoWithInventory(
                     this.repository.findById(beerId).orElseThrow(NotFoundException::new)
@@ -56,8 +59,10 @@ public class BeerServiceImpl implements BeerService {
         return this.mapper.beerToBeerDto(beer);
     }
 
+    @Cacheable(cacheNames = "beerListCache", condition = "#showInventoryOnHand==false")
     @Override
     public BeerPageList listBeers(String beerName, BeerStyleEnum beerStyle, PageRequest pageRequest, Boolean showInventoryOnHand) {
+        System.out.println("I was called");
         Page<Beer> page;
         if (!StringUtils.isEmpty(beerName) && !StringUtils.isEmpty(beerStyle)) {
             page = this.repository.findAllByBeerNameAndBeerStyle(beerName, beerStyle, pageRequest);

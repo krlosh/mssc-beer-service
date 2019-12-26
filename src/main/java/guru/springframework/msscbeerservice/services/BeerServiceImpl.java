@@ -40,6 +40,21 @@ public class BeerServiceImpl implements BeerService {
         }
     }
 
+    @Cacheable(cacheNames = "beerUpcCache", condition = "#showInventoryOnHand==false")
+    @Override
+    public BeerDto getByUpc(String beerId, Boolean showInventoryOnHand) {
+        if(showInventoryOnHand){
+            return this.mapper.beerToBeerDtoWithInventory(
+                    this.repository.findByUpc(beerId).orElseThrow(NotFoundException::new)
+            );
+        }
+        else {
+            return this.mapper.beerToBeerDto(
+                    this.repository.findByUpc(beerId).orElseThrow(NotFoundException::new)
+            );
+        }
+    }
+
     @Override
     public BeerDto saveNewBeer(BeerDto beerDto) {
         return this.mapper.beerToBeerDto(

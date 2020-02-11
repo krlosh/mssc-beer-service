@@ -15,4 +15,5 @@ public class BeerEvent implements Serializable {
     static final long serialVersionUID = 6254807710879535981L;
 
     private final BeerDto beerDto;
+
 }

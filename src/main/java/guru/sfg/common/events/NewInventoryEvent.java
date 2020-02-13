@@ -1,4 +1,4 @@
-package guru.springframework.msscbeerservice.events;
+package guru.sfg.common.events;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import guru.springframework.msscbeerservice.web.model.BeerDto;

@@ -18,7 +18,7 @@ public class JmsConfiguration {
     public static final String VALIDATE_ORDER_RESPONSE_QUEUE = "validate-order-response";
 
     @Bean
-    public MessageConverter messageConverter(ObjectMapper mapper){
+    public MessageConverter jacksonJmsMessageConverter(ObjectMapper mapper){
         MappingJackson2MessageConverter converter = new MappingJackson2MessageConverter();
         converter.setTargetType(MessageType.TEXT);
         converter.setTypeIdPropertyName("_type");

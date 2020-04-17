@@ -12,6 +12,6 @@ import java.util.UUID;
 @AllArgsConstructor
 @Builder
 public class ValidateOrderResult {
-    private UUID id = null;
+    private UUID orderId = null;
     private Boolean isValid;
 }

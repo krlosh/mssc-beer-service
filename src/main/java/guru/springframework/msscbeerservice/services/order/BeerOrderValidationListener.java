@@ -23,7 +23,7 @@ public class BeerOrderValidationListener {
         log.info("********** Validating orderid {} sending response {}", validateOrderRequest.getBeerOrder().getId(), isValid);
         jmsTemplate.convertAndSend(JmsConfiguration.VALIDATE_ORDER_RESPONSE_QUEUE,
                 ValidateOrderResult.builder()
-                        .id(validateOrderRequest.getBeerOrder().getId())
+                        .orderId(validateOrderRequest.getBeerOrder().getId())
                         .isValid(isValid)
                 .build()
         );

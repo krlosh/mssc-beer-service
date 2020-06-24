@@ -15,6 +15,10 @@
     <name>mssc-beer-service</name>
     <description>Demo project for Spring Boot</description>
 
+    <properties>
+        <docker.image.prefix>krlosh</docker.image.prefix>
+    </properties>
+
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>

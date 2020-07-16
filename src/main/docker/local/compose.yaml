@@ -11,19 +11,22 @@ services:
       - 9411:9411
   eureka:
     image: krlosh/mssc-brewery-eureka
+#    image: sfgbeerworks/mssc-brewery-eureka
     ports:
       - 8761:8761
   config:
     image: krlosh/mssc-config-server
+#    image: sfgbeerworks/mssc-config-server
     ports:
       - 8888:8888
     depends_on:
       - eureka
     environment:
-      EUREKA_CLIENT_SERVICE-URL_DEFAULTZONE: http://netflix:eureka@eureka:8761/eureka
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://netflix:eureka@eureka:8761/eureka
       EUREKA_INSTANCE_PREFER_IP_ADDRESS: 'true'
   inventory-service:
     image: krlosh/mssc-beer-inventory-service
+#    image: sfgbeerworks/mssc-beer-inventory-service
     ports:
       - 8082:8082
     depends_on:
@@ -31,25 +34,28 @@ services:
       - config
       - jms
     environment:
-      EUREKA_CLIENT_SERVICE-URL_DEFAULTZONE: http://netflix:eureka@eureka:8761/eureka
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://netflix:eureka@eureka:8761/eureka
       EUREKA_INSTANCE_PREFER_IP_ADDRESS: 'true'
       SPRING_PROFILES_ACTIVE: local-discovery,localmysql
+#      SPRING_CLOUD_CONFIG_DISCOVER_ENABLED: 'true'
       SPRING_ZIPKIN_BASEURL: http://zipkin
       SPRING_ARTEMIS_HOST: jms
       SPRING_DATASOURCE_URL: jdbc:mysql://host.docker.internal:3306/beerinventoryservice?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
     restart: on-failure
   inventory-failover:
     image: krlosh/mssc-failover-inventory-service
+#    image: sfgbeerworks/mssc-failover-inventory-service
     ports:
       - 8083:8083
     depends_on:
       - eureka
       - config
     environment:
-      EUREKA_CLIENT_SERVICE-URL_DEFAULTZONE: http://netflix:eureka@eureka:8761/eureka
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://netflix:eureka@eureka:8761/eureka
       EUREKA_INSTANCE_PREFER_IP_ADDRESS: 'true'
   beer-service:
     image: krlosh/mssc-beer-service
+#    image: sfgbeerworks/mssc-beer-service
     ports:
       - 8080:8080
     depends_on:
@@ -58,7 +64,7 @@ services:
       - jms
       - inventory-service
     environment:
-      EUREKA_CLIENT_SERVICE-URL_DEFAULTZONE: http://netflix:eureka@eureka:8761/eureka
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://netflix:eureka@eureka:8761/eureka
       EUREKA_INSTANCE_PREFER_IP_ADDRESS: 'true'
       SPRING_PROFILES_ACTIVE: local-discovery,localmysql
       SPRING_ZIPKIN_BASEURL: http://zipkin
@@ -67,6 +73,7 @@ services:
     restart: on-failure
   order-service:
     image: krlosh/mssc-beer-order-service
+#    image: sfgbeerworks/mssc-beer-order-service
     ports:
       - 8081:8081
     depends_on:
@@ -75,7 +82,7 @@ services:
       - jms
       - beer-service
     environment:
-      EUREKA_CLIENT_SERVICE-URL_DEFAULTZONE: http://netflix:eureka@eureka:8761/eureka
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://netflix:eureka@eureka:8761/eureka
       EUREKA_INSTANCE_PREFER_IP_ADDRESS: 'true'
       SPRING_PROFILES_ACTIVE: local-discovery,localmysql
       SPRING_ZIPKIN_BASEURL: http://zipkin
@@ -85,6 +92,7 @@ services:
     restart: on-failure
   gateway:
     image: krlosh/mssc-brewery-gateway
+#    image: sfgbeerworks/mssc-brewery-gateway
     ports:
       - 9090:9090
     depends_on:
@@ -95,6 +103,6 @@ services:
       - order-service
       - inventory-failover
     environment:
-      EUREKA_CLIENT_SERVICE-URL_DEFAULTZONE: http://netflix:eureka@eureka:8761/eureka
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://netflix:eureka@eureka:8761/eureka
       EUREKA_INSTANCE_PREFER_IP_ADDRESS: 'true'
       SPRING_PROFILES_ACTIVE: local-discovery

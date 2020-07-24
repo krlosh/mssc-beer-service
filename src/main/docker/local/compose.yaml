@@ -39,6 +39,7 @@ services:
       SPRING_PROFILES_ACTIVE: local-discovery,localmysql
 #      SPRING_CLOUD_CONFIG_DISCOVER_ENABLED: 'true'
       SPRING_ZIPKIN_BASEURL: http://zipkin
+      SPRING_ZIPKIN_ENABLED: 'true'
       SPRING_ARTEMIS_HOST: jms
       SPRING_DATASOURCE_URL: jdbc:mysql://host.docker.internal:3306/beerinventoryservice?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
     restart: on-failure
@@ -68,6 +69,7 @@ services:
       EUREKA_INSTANCE_PREFER_IP_ADDRESS: 'true'
       SPRING_PROFILES_ACTIVE: local-discovery,localmysql
       SPRING_ZIPKIN_BASEURL: http://zipkin
+      SPRING_ZIPKIN_ENABLED: 'true'
       SPRING_ARTEMIS_HOST: jms
       SPRING_DATASOURCE_URL: jdbc:mysql://host.docker.internal:3306/beerservice?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
     restart: on-failure
@@ -86,13 +88,14 @@ services:
       EUREKA_INSTANCE_PREFER_IP_ADDRESS: 'true'
       SPRING_PROFILES_ACTIVE: local-discovery,localmysql
       SPRING_ZIPKIN_BASEURL: http://zipkin
+      SPRING_ZIPKIN_ENABLED: 'true'
       SPRING_ARTEMIS_HOST: jms
       SPRING_DATASOURCE_URL: jdbc:mysql://host.docker.internal:3306/beerorderservice?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
       SFG_BREWERY_BEER-SERVICE-HOST: http://beer-service:8080
     restart: on-failure
   gateway:
     image: krlosh/mssc-brewery-gateway
-#    image: sfgbeerworks/mssc-brewery-gateway
+    image: sfgbeerworks/mssc-brewery-gateway
     ports:
       - 9090:9090
     depends_on:
